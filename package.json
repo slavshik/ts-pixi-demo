@@ -12,6 +12,7 @@
   "devDependencies": {
     "@types/gsap": "^3.0.0",
     "@webpack-cli/generators": "^3.0.0",
+    "copy-webpack-plugin": "^11.0.0",
     "html-webpack-plugin": "^5.5.0",
     "prettier": "^2.7.1",
     "ts-loader": "^9.4.1",
