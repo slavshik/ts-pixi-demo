@@ -1,5 +1,6 @@
 import {gsap} from "gsap/gsap-core";
 import {Container} from "pixi.js";
+import {randomFrom} from "../helpers";
 import {AssetsHelper} from "../AssetsHelper";
 import {BaseView} from "../BaseView";
 
@@ -14,7 +15,7 @@ export class Demo1 extends BaseView {
         console.log("Demo1 added");
         let total = 144;
         while (--total > 0) {
-            const card = this.getRandomCard();
+            const card = AssetsHelper.getCard(randomFrom(suits), randomFrom(ranks));
             card.y = this._stack1.length * 5;
             this.addChild(card);
             this._stack1.push(card);
@@ -39,10 +40,5 @@ export class Demo1 extends BaseView {
                 }
             });
         }
-    }
-    private getRandomCard(): Container {
-        const rank = ranks[Math.floor(Math.random() * ranks.length)];
-        const suit = suits[Math.floor(Math.random() * suits.length)];
-        return AssetsHelper.getCard(suit, rank);
     }
 }

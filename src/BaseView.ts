@@ -1,17 +1,18 @@
 import {Container} from "pixi.js";
 
-export class BaseView extends Container {
-    private _onAdded = this.onAdded.bind(this);
-    private _onRemoved = this.onRemoved.bind(this);
+export abstract class BaseView extends Container {
+    private readonly _onAdded = this.onAdded.bind(this);
+    private readonly _onRemoved = this.onRemoved.bind(this);
+
     constructor() {
         super();
         this.on("added", this._onAdded);
         this.on("removed", this._onRemoved);
     }
-    onAdded() {
+    protected onAdded() {
         //
     }
-    onRemoved() {
+    protected onRemoved() {
         //
     }
     destroy(options?: any) {

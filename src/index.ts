@@ -3,7 +3,7 @@ import {MainView} from "./MainView";
 import {AssetsHelper} from "./AssetsHelper";
 import {ResizableView} from "./interfaces";
 
-const app = new Application();
+const app = new Application({resolution: window.devicePixelRatio});
 document.body.appendChild(app.view as any);
 const resizableViews: (Container & ResizableView)[] = [];
 const onResize = () => {
@@ -19,8 +19,8 @@ async function main() {
     await AssetsHelper.loadAll();
     const mainView = new MainView();
     resizableViews.push(mainView);
-    onResize();
     app.stage.addChild(mainView);
+    onResize();
 }
 
 main();
