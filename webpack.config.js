@@ -12,7 +12,7 @@ const config = {
         path: path.resolve(__dirname, "dist")
     },
     devServer: {
-        host: "localhost",
+        host: "0.0.0.0",
         static: {
             directory: path.join(__dirname, "assets")
         }
