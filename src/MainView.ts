@@ -12,7 +12,7 @@ export class MainView extends BaseView implements ResizableView {
 
     onAdded() {
         window.addEventListener("keypress", this._keyboardHandler);
-        this.showDemo(1);
+        this.showDemo(2);
     }
     keyboardHandler(e: KeyboardEvent) {
         switch (e.key) {

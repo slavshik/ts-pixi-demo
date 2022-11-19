@@ -12,6 +12,7 @@ const onResize = () => {
     app.renderer.resize(width, height);
     resizableViews.forEach(view => (view.resize ? view.resize(width, height) : void 0));
 };
+onResize();
 window.addEventListener("resize", onResize);
 
 async function main() {
