@@ -8,10 +8,12 @@ import {ResizableView} from "./interfaces";
 
 export class MainView extends BaseView implements ResizableView {
     private readonly _keyboardHandler = this.keyboardHandler.bind(this);
-    private _currentDemo?: Container;
+    private _currentDemo?: Container & ResizableView;
     private _selectedButton?: Button;
     private _currentDemoIndex: number;
     private buttons: Container = new Container();
+    private _screenWidth: number;
+    private _screenHeight: number;
 
     onAdded() {
         window.addEventListener("keypress", this._keyboardHandler);
@@ -22,7 +24,7 @@ export class MainView extends BaseView implements ResizableView {
             this.buttons.addChild(theButton);
         });
         this.addChild(this.buttons);
-        this.showDemo(2);
+        this.showDemo(1);
     }
     keyboardHandler(e: KeyboardEvent) {
         switch (e.key) {
@@ -64,13 +66,19 @@ export class MainView extends BaseView implements ResizableView {
         if (this._currentDemo) {
             this.addChild(this._currentDemo);
         }
+        this.resize(this._screenWidth, this._screenHeight);
     }
     onRemoved() {
         window.removeEventListener("keypress", this._keyboardHandler);
         (this.buttons.children as Button[]).forEach(child => child.off(Button.CLICK_EVENT));
     }
     resize(width: number, height: number) {
+        this._screenWidth = width;
+        this._screenHeight = height;
         this.buttons.x = (width - this.buttons.width) * 0.5;
         this.buttons.y = height - this.buttons.height;
+        if (this._currentDemo?.resize) {
+            this._currentDemo.resize(width, height);
+        }
     }
 }

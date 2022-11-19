@@ -3,18 +3,14 @@ import {Assets, Sprite, BitmapFont} from "pixi.js";
 import {randomFrom} from "./helpers";
 
 export class AssetsHelper {
-    private static ALL_CARDS: string[];
     static async loadAll() {
         await Promise.all([
             Assets.load("assets/cards.json"),
             Assets.load("assets/emoji.json"),
             AssetsHelper.loadFont("Nunito-Regular"),
-            AssetsHelper.loadFont("Nunito-Bold")
-            // AssetsHelper.loadFont("Nunito-Black"),
-            // AssetsHelper.loadFont("Nunito-ExtraBold")
+            AssetsHelper.loadFont("Nunito-Bold"),
+            AssetsHelper.loadFont("Nunito-Italic")
         ]);
-        const cards = Assets.get("assets/cards.json").textures;
-        AssetsHelper.ALL_CARDS = Object.keys(cards);
     }
     static getEmoji(id?: string): Sprite {
         const textures = Assets.get("assets/emoji.json").textures;

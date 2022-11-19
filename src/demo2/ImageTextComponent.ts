@@ -2,7 +2,7 @@ import {BitmapText, Container, Graphics, IBitmapTextStyle} from "pixi.js";
 import {AssetsHelper} from "../AssetsHelper";
 
 type Img = {asset: string};
-type Txt = {text: string; style?: IBitmapTextStyle};
+type Txt = {text: string; style?: Partial<IBitmapTextStyle>};
 type Part = Img | Txt | Container | Graphics;
 
 export class ImageTextComponent extends Container {
@@ -16,7 +16,7 @@ export class ImageTextComponent extends Container {
             .map(part => this.createPart(part))
             ./* filter(part => !!part). */ forEach(obj => this.addChild(obj));
         this.alignChildren();
-        // TODO: animated
+        // TODO: add animations?
     }
     private createPart(part: Part): Container {
         if ("asset" in part) {
@@ -35,8 +35,8 @@ export class ImageTextComponent extends Container {
         let prevChild: Container | null = null;
         (this.children as Container[]).forEach(child => {
             if (prevChild) {
-                child.x = prevChild.x + prevChild.width;
-                child.y = prevChild.y + (prevChild.height - child.height) / 2;
+                child.x = prevChild.x + prevChild.width + 5;
+                child.y = prevChild.y + (prevChild.height - child.height) * 0.5;
             }
             prevChild = child;
         });

@@ -1,44 +1,46 @@
+import {gsap} from "gsap/gsap-core";
+import {DemoView} from "../DemoView";
 import {randomFrom, randomRange} from "../helpers";
-import {BaseView} from "../BaseView";
-import {ResizableView} from "../interfaces";
 import {ImageTextComponent} from "./ImageTextComponent";
 
-const TEXTS = [{text: "One"}, {text: "Two"}, {text: "Three"}];
-const EMOJIS = new Array(17).fill(0).map((_, i) => ({asset: `e${i}`}));
-
-export class Demo2 extends BaseView implements ResizableView {
-    private _updateInterval: ReturnType<typeof setInterval>;
-    private readonly _updateViews = this.updateViews.bind(this);
+export class Demo2 extends DemoView {
     private readonly theComponent = new ImageTextComponent();
+    private readonly getRandomEmoji = () => ({asset: `e${randomRange(1, 17)}`});
+    private readonly getRandomText = () => ({
+        text: randomFrom(["One", "Hello", "4242", "Lorem ipsum dolor", "Just text"]),
+        style: {
+            fontName: `Nunito-${randomFrom(["Regular", "Bold", "Italic"])}`,
+            fontSize: randomRange(18, 40),
+            maxWidth: 150
+        }
+    });
 
-    onAdded(): void {
-        console.log("Demo2 added");
-        this.theComponent.y = 100;
+    protected onAdded(): void {
         this.addChild(this.theComponent);
-        this._updateInterval = setInterval(this._updateViews, 1000);
-        this.updateViews();
+        this.showRandomView();
     }
 
-    private updateViews(): void {
-        const amount = randomRange(2, 7);
+    private showRandomView(): void {
+        // generate
         this.theComponent.setContent(
-            new Array(amount).fill(0).map(() => {
-                if (Math.random() < 0.5) {
-                    return randomFrom(EMOJIS);
-                } else {
-                    return this.getRandomText();
-                }
-            })
+            new Array(randomRange(2, 5))
+                .fill(0)
+                .map(() => (Math.random() > 0.8 ? this.getRandomEmoji() : this.getRandomText()))
         );
+        // align
+        this.alignComponent();
+        // animate
+        gsap.timeline()
+            .fromTo(this.theComponent, {alpha: 0}, {alpha: 1})
+            .to(this.theComponent, {alpha: 0, delay: 2})
+            .call(() => this.showRandomView());
     }
-    private getRandomText() {
-        return randomFrom(TEXTS);
+    private alignComponent(): void {
+        this.theComponent.x = (this.screenWidth - this.theComponent.width) * 0.5;
+        this.theComponent.y = (this.screenHeight - this.theComponent.height) * 0.5;
     }
 
-    onRemoved(): void {
-        clearInterval(this._updateInterval);
-    }
-    resize(width: number, height: number): void {
-        //
+    protected onRemoved(): void {
+        gsap.killTweensOf(this.theComponent);
     }
 }
