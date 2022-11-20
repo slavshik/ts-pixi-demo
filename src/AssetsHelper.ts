@@ -32,7 +32,7 @@ export class AssetsHelper {
         }
         BitmapFont.from(
             fontFamily,
-            {fontSize: 96, fill: 0xffffff},
+            {fontSize: 96, fontFamily, fill: 0xffffff},
             {chars: BitmapFont.ALPHANUMERIC, resolution: window.devicePixelRatio}
         );
     }

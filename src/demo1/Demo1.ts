@@ -37,9 +37,9 @@ export class Demo1 extends DemoView {
     private moveCard() {
         const card = this._deck1.pop();
         if (card) {
-            this._deck2.push(card);
             const duration = 2;
-            const y = this._deck2.length * 5;
+            this._deck2.push(card);
+            const y = (this._deck2.length - 1) * 5;
             gsap.to(card, {
                 duration,
                 y,

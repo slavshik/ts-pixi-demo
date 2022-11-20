@@ -6,17 +6,16 @@ type Txt = {text: string; style?: Partial<IBitmapTextStyle>};
 type Part = Img | Txt | Container | Graphics;
 
 export class ImageTextComponent extends Container {
-    constructor(parts: Part[] = []) {
+    constructor(parts: Part[] = [], private gap: number = 5) {
         super();
         this.setContent(parts);
     }
-    setContent(values: Part[], animated = false) {
+    public setContent(values: Part[]): void {
         this.removeChildren();
         values
             .map(part => this.createPart(part))
             ./* filter(part => !!part). */ forEach(obj => this.addChild(obj));
         this.alignChildren();
-        // TODO: add animations?
     }
     private createPart(part: Part): Container {
         if ("asset" in part) {
@@ -35,7 +34,7 @@ export class ImageTextComponent extends Container {
         let prevChild: Container | null = null;
         (this.children as Container[]).forEach(child => {
             if (prevChild) {
-                child.x = prevChild.x + prevChild.width + 5;
+                child.x = prevChild.x + prevChild.width + this.gap;
                 child.y = prevChild.y + (prevChild.height - child.height) * 0.5;
             }
             prevChild = child;

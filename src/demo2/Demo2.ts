@@ -10,8 +10,8 @@ export class Demo2 extends DemoView {
         text: randomFrom(["One", "Hello", "4242", "Lorem ipsum dolor", "Just text"]),
         style: {
             fontName: `Nunito-${randomFrom(["Regular", "Bold", "Italic"])}`,
-            fontSize: randomRange(18, 40),
-            maxWidth: 150
+            fontSize: randomRange(18, 64),
+            maxWidth: 250
         }
     });
 
@@ -35,6 +35,7 @@ export class Demo2 extends DemoView {
             .to(this.theComponent, {alpha: 0, delay: 2})
             .call(() => this.showRandomView());
     }
+
     private alignComponent(): void {
         this.theComponent.x = (this.screenWidth - this.theComponent.width) * 0.5;
         this.theComponent.y = (this.screenHeight - this.theComponent.height) * 0.5;
@@ -42,5 +43,10 @@ export class Demo2 extends DemoView {
 
     protected onRemoved(): void {
         gsap.killTweensOf(this.theComponent);
+    }
+
+    public resize(width: number, height: number): void {
+        super.resize(width, height);
+        this.alignComponent();
     }
 }
