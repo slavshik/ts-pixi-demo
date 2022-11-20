@@ -1,5 +1,5 @@
 import * as FontFaceObserver from "fontfaceobserver";
-import {Assets, Sprite, BitmapFont} from "pixi.js";
+import {Assets, Sprite, BitmapFont, Texture} from "pixi.js";
 import {randomFrom} from "./helpers";
 
 export class AssetsHelper {
@@ -22,6 +22,9 @@ export class AssetsHelper {
     }
     static getCard(suit: string, rank: string): Sprite {
         return new Sprite(Assets.get("assets/cards.json").textures[`${rank}_${suit}.png`]);
+    }
+    static getFlame(): Texture {
+        return Assets.get("assets/emoji.json").textures["e1.png"];
     }
     private static async loadFont(fontFamily: string) {
         const observer = new FontFaceObserver(fontFamily);
