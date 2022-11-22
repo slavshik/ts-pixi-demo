@@ -2,6 +2,7 @@ import {Application, Container} from "pixi.js";
 import {MainView} from "./MainView";
 import {AssetsHelper} from "./AssetsHelper";
 import {ResizableView} from "./interfaces";
+import {addFPSMeter} from "./helpers";
 
 const app = new Application({resolution: window.devicePixelRatio});
 document.body.appendChild(app.view as any);
@@ -24,3 +25,4 @@ async function main() {
 }
 
 main();
+addFPSMeter();

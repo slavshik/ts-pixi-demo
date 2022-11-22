@@ -12,12 +12,14 @@ export class Demo1 extends DemoView {
     private readonly _deck2: Container[] = [];
     private readonly _stackCont1 = new Container();
     private readonly _stackCont2 = new Container();
-    private readonly _frontmostCont = this;
+    private readonly _mainCont = new Container();
+    private readonly _frontmostCont = this._mainCont;
     private _interval: ReturnType<typeof setInterval>;
 
     constructor() {
         super();
-        this.addChild(this._stackCont1, this._stackCont2);
+        this.addChild(this._mainCont);
+        this._mainCont.addChild(this._stackCont1, this._stackCont2);
     }
     protected onAdded(): void {
         let total = 144;
@@ -53,5 +55,8 @@ export class Demo1 extends DemoView {
                 .to(card, {rotation: 0.1, duration: halfDuration, ease: "sine.out"})
                 .to(card, {rotation: 0, duration: halfDuration, ease: "sine.in"});
         }
+    }
+    resize(width: number, height: number): void {
+        this._mainCont.position.set((width - 180) * 0.5, 0);
     }
 }
