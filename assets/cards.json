@@ -378,7 +378,7 @@
     "image": "cards.png",
     "format": "RGBA8888",
     "size": {"w": 2048, "h": 4096},
-    "scale": "3",
+    "scale": "2",
     "smartupdate": "$TexturePacker:SmartUpdate:bce84194bc679a4554e7e98e0935280b:32a8731316db0cee76a3d2a04d17ea91:1dbf3a5ebac9359a68c9608a996532ec$"
   }
 }

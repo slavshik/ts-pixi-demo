@@ -25,6 +25,7 @@ export class Demo1 extends DemoView {
         let total = 144;
         while (--total > 0) {
             const card = AssetsHelper.getCard(randomFrom(suits), randomFrom(ranks));
+            card.anchor.set(1, 0);
             card.y = this._deck1.length * 5;
             this._stackCont1.addChild(card);
             this._deck1.push(card);
@@ -57,6 +58,6 @@ export class Demo1 extends DemoView {
         }
     }
     resize(width: number, height: number): void {
-        this._mainCont.position.set((width - 180) * 0.5, 0);
+        this._mainCont.x = width * 0.5;
     }
 }

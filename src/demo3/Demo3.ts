@@ -1,7 +1,5 @@
 import * as particles from "@pixi/particle-emitter";
-import {EmitterConfigV3} from "@pixi/particle-emitter";
 import {Container} from "pixi.js";
-import {AssetsHelper} from "../AssetsHelper";
 import {DemoView} from "../DemoView";
 
 export class Demo3 extends DemoView {
@@ -34,7 +32,7 @@ export class Demo3 extends DemoView {
         super.resize(width, height);
         this.emitterPivot.position.set(width * 0.5, height * 0.5);
     }
-    protected getEmitterConfig(): EmitterConfigV3 {
+    protected getEmitterConfig(): particles.EmitterConfigV3 {
         return {
             lifetime: {min: 0.1, max: 0.75},
             frequency: 0.001,
@@ -48,7 +46,8 @@ export class Demo3 extends DemoView {
                     config: {
                         alpha: {
                             list: [
-                                {time: 0, value: 0.62},
+                                {time: 0, value: 0},
+                                {time: 0.1, value: 0.62},
                                 {time: 1, value: 0}
                             ]
                         }
@@ -56,15 +55,15 @@ export class Demo3 extends DemoView {
                 },
                 {
                     type: "moveSpeedStatic",
-                    config: {min: 50, max: 200}
+                    config: {min: 50, max: 100}
                 },
                 {
                     type: "scale",
                     config: {
                         scale: {
                             list: [
-                                {time: 0, value: 0.25},
-                                {time: 1, value: 0.5}
+                                {time: 0, value: 0.5},
+                                {time: 1, value: 1}
                             ]
                         },
                         minMult: 1
@@ -77,14 +76,15 @@ export class Demo3 extends DemoView {
                             list: [
                                 {time: 0, value: "fff191"},
                                 {time: 0.5, value: "ff9991"},
-                                {time: 1, value: "ff622c"}
+                                {time: 0.9, value: "ff622c"},
+                                {time: 1, value: "333333"}
                             ]
                         }
                     }
                 },
                 {
                     type: "rotation",
-                    config: {accel: 0.1, minSpeed: 50, maxSpeed: 50, minStart: 265, maxStart: 275}
+                    config: {accel: 0.1, minSpeed: 25, maxSpeed: 50, minStart: 250, maxStart: 275}
                 },
                 {
                     type: "textureRandom",

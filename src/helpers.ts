@@ -8,6 +8,9 @@ export const addFPSMeter = () => {
         history: 20,
         zIndex: 10000
     });
+    const rootElement = document.getElementsByTagName("canvas")[0];
+    const el = document.createElement("div")!;
+    document.body.insertBefore(el, rootElement);
     fpsmeter.show();
     const tick = () => {
         fpsmeter.tick();
