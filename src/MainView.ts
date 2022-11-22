@@ -20,7 +20,7 @@ export class MainView extends DemoView {
             btn.on(Button.CLICK_EVENT, () => this.showDemo(i + 1));
         });
         this.addChild(this._buttonsCont);
-        this.showDemo(3);
+        this.showDemo(1);
     }
     private keyboardHandler(e: KeyboardEvent): void {
         switch (e.key) {
