@@ -1,15 +1,3 @@
-# 🚀 Welcome to your new awesome project!
+# 🚀 Demo project
 
-This project has been created using **webpack-cli**, you can now run
-
-```
-npm run build
-```
-
-or
-
-```
-yarn build
-```
-
-to bundle your application
+[https://slavshik.github.io/ts-pixi-demo/](https://slavshik.github.io/ts-pixi-demo/)
