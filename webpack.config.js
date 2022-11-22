@@ -8,9 +8,7 @@ const isProduction = process.env.NODE_ENV == "production";
 const config = {
     entry: "./src/index.ts",
     devtool: "source-map",
-    output: {
-        path: path.resolve(__dirname, "dist")
-    },
+    output: {path: path.resolve(__dirname, "docs")},
     devServer: {
         host: "0.0.0.0",
         static: {
