@@ -34,7 +34,7 @@ export class Demo3 extends DemoView {
     }
     protected getEmitterConfig(): particles.EmitterConfigV3 {
         return {
-            lifetime: {min: 0.1, max: 0.75},
+            lifetime: {min: 0.15, max: 0.5},
             frequency: 0.001,
             emitterLifetime: 0,
             maxParticles: 10,
@@ -75,8 +75,8 @@ export class Demo3 extends DemoView {
                         color: {
                             list: [
                                 {time: 0, value: "fff191"},
-                                {time: 0.5, value: "ff9991"},
-                                {time: 0.9, value: "ff622c"},
+                                {time: 0.5, value: "ff8237"},
+                                {time: 0.9, value: "fa571f"},
                                 {time: 1, value: "333333"}
                             ]
                         }
@@ -89,7 +89,12 @@ export class Demo3 extends DemoView {
                 {
                     type: "textureRandom",
                     config: {
-                        textures: ["assets/particle.png", "assets/Fire.png", "assets/Fire2.png"]
+                        textures: [
+                            "assets/particle.png",
+                            "assets/Fire.png",
+                            "assets/Fire2.png",
+                            "assets/Fire3.png"
+                        ]
                     }
                 },
                 {
@@ -101,77 +106,5 @@ export class Demo3 extends DemoView {
                 }
             ]
         };
-        //     return {
-        //         lifetime: {min: 0.5, max: 0.5},
-        //         frequency: 0.008,
-        //         spawnChance: 1,
-        //         particlesPerWave: 1,
-        //         emitterLifetime: 0.31,
-        //         maxParticles: 1000,
-        //         pos: {x: 0, y: 0},
-        //         addAtBack: false,
-        //         behaviors: [
-        //             {
-        //                 type: "alpha",
-        //                 config: {
-        //                     alpha: {
-        //                         list: [
-        //                             {value: 0.8, time: 0},
-        //                             {value: 0.1, time: 1}
-        //                         ]
-        //                     }
-        //                 }
-        //             },
-        //             {
-        //                 type: "scale",
-        //                 config: {
-        //                     scale: {
-        //                         list: [
-        //                             {value: 1, time: 0},
-        //                             {value: 0.3, time: 1}
-        //                         ]
-        //                     }
-        //                 }
-        //             },
-        //             {
-        //                 type: "color",
-        //                 config: {
-        //                     color: {
-        //                         list: [
-        //                             {value: "fb1010", time: 0},
-        //                             {value: "f5b830", time: 1}
-        //                         ]
-        //                     }
-        //                 }
-        //             },
-        //             {
-        //                 type: "moveSpeed",
-        //                 config: {
-        //                     speed: {
-        //                         list: [
-        //                             {value: 200, time: 0},
-        //                             {value: 100, time: 1}
-        //                         ],
-        //                         isStepped: false
-        //                     }
-        //                 }
-        //             },
-        //             {
-        //                 type: "rotationStatic",
-        //                 config: {min: 0, max: 360}
-        //             },
-        //             {
-        //                 type: "spawnShape",
-        //                 config: {
-        //                     type: "torus",
-        //                     data: {x: 0, y: 0, radius: 10}
-        //                 }
-        //             },
-        //             {
-        //                 type: "textureSingle",
-        //                 config: {texture: AssetsHelper.getFlame()}
-        //             }
-        //         ]
-        //     };
     }
 }
