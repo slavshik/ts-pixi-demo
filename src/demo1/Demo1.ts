@@ -35,8 +35,8 @@ export class Demo1 extends DemoView {
         this._interval = setInterval(() => {
             const card = this._deck1.pop();
             if (card) {
-                this._deck2.push(card);
                 this.moveCard(card);
+                this._deck2.push(card);
             } else {
                 clearInterval(this._interval);
             }
@@ -45,7 +45,7 @@ export class Demo1 extends DemoView {
 
     private moveCard(card: Container): void {
         const duration = this.movingSpeedSec;
-        const y = (this._deck2.length - 1) * 5;
+        const y = this._deck2.length * 5;
         gsap.to(card, {
             duration,
             y,
