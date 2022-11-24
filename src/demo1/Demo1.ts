@@ -16,48 +16,57 @@ export class Demo1 extends DemoView {
     private readonly _frontmostCont = this._mainCont;
     private _interval: ReturnType<typeof setInterval>;
 
-    constructor() {
+    constructor(
+        totalCards = 144,
+        private readonly moveCardIntervalSec = 1,
+        private readonly movingSpeedSec = 2
+    ) {
         super();
         this.addChild(this._mainCont);
         this._mainCont.addChild(this._stackCont1, this._stackCont2);
-    }
-    protected onAdded(): void {
-        let total = 144;
-        while (--total > 0) {
+        for (let i = 0; i < totalCards; i++) {
             const card = AssetsHelper.getCard(randomFrom(suits), randomFrom(ranks));
-            card.anchor.set(1, 0);
             card.y = this._deck1.length * 5;
             this._stackCont1.addChild(card);
             this._deck1.push(card);
         }
-        this._interval = setInterval(() => this.moveCard(), 1000);
+    }
+    protected onAdded(): void {
+        this._interval = setInterval(() => {
+            const card = this._deck1.pop();
+            if (card) {
+                this._deck2.push(card);
+                this.moveCard(card);
+            } else {
+                clearInterval(this._interval);
+            }
+        }, this.moveCardIntervalSec * 1000);
+    }
+
+    private moveCard(card: Container): void {
+        const duration = this.movingSpeedSec;
+        const y = (this._deck2.length - 1) * 5;
+        gsap.to(card, {
+            duration,
+            y,
+            onStart: () => this._frontmostCont.addChild(card),
+            onComplete: () => this._stackCont2.addChild(card)
+        });
+        // other animations
+        gsap.to(card, {x: card.width, duration, ease: "back.out"});
+        const halfDuration = duration * 0.5;
+        gsap.timeline()
+            .to(card, {rotation: 0.1, duration: halfDuration, ease: "sine.out"})
+            .to(card, {rotation: 0, duration: halfDuration, ease: "sine.in"});
     }
 
     protected onRemoved(): void {
-        gsap.killTweensOf(this._deck2); // may not super efficient, but effective
+        // may not super efficient, but enough for this demo
+        gsap.killTweensOf(this._deck2);
         clearInterval(this._interval);
     }
-    private moveCard() {
-        const card = this._deck1.pop();
-        if (card) {
-            const duration = 2;
-            this._deck2.push(card);
-            const y = (this._deck2.length - 1) * 5;
-            gsap.to(card, {
-                duration,
-                y,
-                onStart: () => this._frontmostCont.addChild(card),
-                onComplete: () => this._stackCont2.addChild(card)
-            });
-            // other animations
-            gsap.to(card, {x: card.width, duration, ease: "back.out"});
-            const halfDuration = duration * 0.5;
-            gsap.timeline()
-                .to(card, {rotation: 0.1, duration: halfDuration, ease: "sine.out"})
-                .to(card, {rotation: 0, duration: halfDuration, ease: "sine.in"});
-        }
-    }
-    resize(width: number, height: number): void {
-        this._mainCont.x = width * 0.5;
+
+    public resize(width: number, height: number): void {
+        this._mainCont.x = (width - 272) * 0.5; // 272 - stacks width
     }
 }
