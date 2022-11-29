@@ -3,7 +3,6 @@ import {BaseView} from "./BaseView";
 
 export class Button extends BaseView {
     public static readonly CLICK_EVENT: any = Symbol("click");
-    private readonly _clickHandler = this.onClick.bind(this);
     private readonly _label: BitmapText;
     private _selected = false;
 
@@ -24,10 +23,10 @@ export class Button extends BaseView {
         this.emit(Button.CLICK_EVENT);
     }
     protected onAdded(): void {
-        this.on("pointerdown", this._clickHandler);
+        this.on("pointerdown", this.onClick, this);
     }
     protected onRemoved(): void {
-        this.off("pointerdown", this._clickHandler);
+        this.off("pointerdown", this.onClick, this);
     }
     public set selected(value: boolean) {
         this._selected = value;
