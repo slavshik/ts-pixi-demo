@@ -1,13 +1,10 @@
 import {Container} from "pixi.js";
 
 export abstract class BaseView extends Container {
-    private readonly _onAdded = this.onAdded.bind(this);
-    private readonly _onRemoved = this.onRemoved.bind(this);
-
     constructor() {
         super();
-        this.on("added", this._onAdded);
-        this.on("removed", this._onRemoved);
+        this.on("added", this.onAdded, this);
+        this.on("removed", this.onRemoved, this);
     }
     protected onAdded() {
         //
@@ -17,7 +14,7 @@ export abstract class BaseView extends Container {
     }
     destroy(options?: any) {
         super.destroy(options);
-        this.off("added", this._onAdded);
-        this.off("removed", this._onRemoved);
+        this.off("added", this.onAdded, this);
+        this.off("removed", this.onRemoved, this);
     }
 }
