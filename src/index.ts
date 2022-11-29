@@ -21,6 +21,7 @@ async function main() {
     const mainView = new MainView();
     resizableViews.push(mainView);
     app.stage.addChild(mainView);
+    mainView.showDemo(1);
     onResize();
 }
 

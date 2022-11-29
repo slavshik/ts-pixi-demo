@@ -6,7 +6,7 @@ export class Demo3 extends DemoView {
     private readonly emitterPivot = new Container();
     private emitter: particles.Emitter;
     private elapsed = Date.now();
-    private _animationFrame: ReturnType<typeof requestAnimationFrame>;
+    private animationFrameId: ReturnType<typeof requestAnimationFrame>;
 
     constructor() {
         super();
@@ -19,13 +19,13 @@ export class Demo3 extends DemoView {
     }
 
     protected update(): void {
-        this._animationFrame = requestAnimationFrame(() => this.update());
+        this.animationFrameId = requestAnimationFrame(() => this.update());
         const now = Date.now();
         this.emitter.update((now - this.elapsed) * 0.001);
         this.elapsed = now;
     }
     protected onRemoved(): void {
-        cancelAnimationFrame(this._animationFrame);
+        cancelAnimationFrame(this.animationFrameId);
     }
 
     public resize(width: number, height: number): void {

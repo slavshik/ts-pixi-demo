@@ -6,51 +6,52 @@ import {Demo3} from "./demo3/Demo3";
 import {DemoView} from "./DemoView";
 
 export class MainView extends DemoView {
-    private readonly _keyboardHandler = this.keyboardHandler.bind(this);
-    private readonly _buttonsCont = new Container();
-    private _currentDemo?: DemoView;
-    private _selectedButton?: Button;
-    private _currentDemoIndex = NaN;
+    private readonly keyboardHandler: (e: KeyboardEvent) => void;
+    private readonly buttonsCont = new Container();
+    private currentDemo?: DemoView;
+    private selectedButton?: Button;
+    private currentDemoIndex = NaN;
 
-    protected onAdded(): void {
-        window.addEventListener("keypress", this._keyboardHandler);
-        const btns = [1, 2, 3].map(i => this._buttonsCont.addChild(new Button(`# ${i}`)));
+    constructor() {
+        super();
+        this.keyboardHandler = (e: KeyboardEvent) => {
+            switch (e.key) {
+                case "1":
+                    return this.showDemo(1);
+                case "2":
+                    return this.showDemo(2);
+                case "3":
+                    return this.showDemo(3);
+            }
+        };
+        window.addEventListener("keypress", this.keyboardHandler);
+        const btns = [1, 2, 3].map(i => this.buttonsCont.addChild(new Button(`# ${i}`)));
         btns.forEach((btn, i) => {
             btn.x = i * (btn.width + 80);
             btn.on(Button.CLICK_EVENT, () => this.showDemo(i + 1));
         });
-        this.addChild(this._buttonsCont);
-        this.showDemo(1);
+        this.addChild(this.buttonsCont);
     }
-    private keyboardHandler(e: KeyboardEvent): void {
-        switch (e.key) {
-            case "1":
-                return this.showDemo(1);
-            case "2":
-                return this.showDemo(2);
-            case "3":
-                return this.showDemo(3);
-        }
-    }
-    private showDemo(index: number): void {
-        if (this._currentDemoIndex !== index) {
-            this._currentDemoIndex = index;
+
+    public showDemo(index: number): void {
+        if (this.currentDemoIndex !== index) {
+            this.currentDemoIndex = index;
         } else return;
 
-        if (this._currentDemo) {
-            this._currentDemo.parent?.removeChild(this._currentDemo);
-            this._currentDemo.destroy();
+        if (this.currentDemo) {
+            this.currentDemo.parent?.removeChild(this.currentDemo);
+            this.currentDemo.destroy();
         }
-        if (this._selectedButton) {
-            this._selectedButton.selected = false;
+        if (this.selectedButton) {
+            this.selectedButton.selected = false;
         }
-        const btn = this._buttonsCont.children[index - 1] as Button;
+        const btn = this.buttonsCont.children[index - 1] as Button;
         if (btn) {
             btn.selected = true;
         }
-        this._selectedButton = btn;
+        this.selectedButton = btn;
 
-        this._currentDemo = ((): DemoView => {
+        this.currentDemo = ((): DemoView => {
             switch (index) {
                 case 1:
                     return new Demo1();
@@ -60,19 +61,22 @@ export class MainView extends DemoView {
                     return new Demo3();
             }
         })();
-        this._currentDemo && this.addChild(this._currentDemo);
+        this.currentDemo && this.addChild(this.currentDemo);
         this.resize(this.screenWidth, this.screenHeight);
     }
-    protected onRemoved(): void {
-        window.removeEventListener("keypress", this._keyboardHandler);
-        (this._buttonsCont.children as Button[]).forEach(child => child.off(Button.CLICK_EVENT));
+
+    public destroy(): void {
+        super.destroy();
+        window.removeEventListener("keypress", this.keyboardHandler);
+        (this.buttonsCont.children as Button[]).forEach(child => child.off(Button.CLICK_EVENT));
     }
+
     public resize(width: number, height: number): void {
         super.resize(width, height);
-        this._buttonsCont.x = (width - this._buttonsCont.width) * 0.5;
-        this._buttonsCont.y = height - this._buttonsCont.height;
-        if (this._currentDemo?.resize) {
-            this._currentDemo.resize(width, height);
+        this.buttonsCont.x = (width - this.buttonsCont.width) * 0.5;
+        this.buttonsCont.y = height - this.buttonsCont.height;
+        if (this.currentDemo?.resize) {
+            this.currentDemo.resize(width, height);
         }
     }
 }
